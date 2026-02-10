@@ -21,20 +21,23 @@ jobs:
           port: 20212
           script: |
             set -euo pipefail
-  
+
             mkdir -p /opt/events
-            cd /opt/events
-            
-            if [ ! -d "kafka-infra/.git" ]; then
-            rm -rf kafka-infra
-            git clone --depth 1 https://github.com/JanJankowski-dev/kafka-infra kafka-infra
+
+            REPO_DIR=/opt/events/kafka-infra
+            ENV_FILE=/opt/events/.env
+            COMPOSE_FILE=infra/docker-compose.mikrus.yml
+
+            if [ ! -d "$REPO_DIR/.git" ]; then
+              rm -rf "$REPO_DIR"
+              git clone --depth 1 https://github.com/JanJankowski-dev/kafka-infra "$REPO_DIR"
             fi
-            
-            cd kafka-infra
-            
-            git fetch --depth 1 origin main
-            git reset --hard origin/main
-            
-            docker compose --env-file .env -f docker-compose.mikrus.yml pull
-            docker compose --env-file .env -f docker-compose.mikrus.yml up -d --remove-orphans
+
+            git -C "$REPO_DIR" fetch --depth 1 origin main
+            git -C "$REPO_DIR" reset --hard origin/main
+
+            docker compose --env-file "$ENV_FILE" -f "$REPO_DIR/$COMPOSE_FILE" pull
+
+            docker compose --env-file "$ENV_FILE" -f "$REPO_DIR/$COMPOSE_FILE" up -d --remove-orphans
+
             docker image prune -f
