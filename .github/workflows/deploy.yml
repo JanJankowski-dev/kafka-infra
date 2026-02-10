@@ -18,6 +18,7 @@ jobs:
           host: ${{ secrets.MIKRUS_HOST }}
           username: ${{ secrets.MIKRUS_USER }}
           key: ${{ secrets.MIKRUS_SSH_KEY }}
+          port: 20212
           script: |
             set -euo pipefail
             mkdir -p /opt/events
