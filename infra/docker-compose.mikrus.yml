@@ -39,7 +39,7 @@ services:
         condition: service_healthy
 
   producer:
-    image: ghcr.io/JanJankowski-dev/events-producer:main
+    image: ghcr.io/janjankowski-dev/events-producer:main
     container_name: producer
     environment:
       - KAFKA_BOOTSTRAP=kafka:9092
@@ -51,7 +51,7 @@ services:
         condition: service_healthy
 
   consumer:
-    image: ghcr.io/JanJankowski-dev/events-consumer:main
+    image: ghcr.io/janjankowski-dev/events-consumer:main
     environment:
       - KAFKA_BOOTSTRAP=kafka:9092
       - JAVA_TOOL_OPTIONS=-Xms64m -Xmx256m
