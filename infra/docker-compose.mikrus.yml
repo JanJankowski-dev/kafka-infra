@@ -62,7 +62,7 @@ services:
     image: nginx:1.27-alpine
     container_name: edge-nginx
     ports:
-      - "30212:80"
+      - "40264:80"
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./nginx/conf.d:/etc/nginx/conf.d:ro
