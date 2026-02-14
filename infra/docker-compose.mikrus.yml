@@ -62,7 +62,7 @@ services:
     image: nginx:1.27-alpine
     container_name: edge-nginx
     ports:
-      - "8088:8080"
+      - "30212:80"
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./nginx/conf.d:/etc/nginx/conf.d:ro
@@ -73,7 +73,7 @@ services:
       - consumer
       - kafka-ui
     healthcheck:
-      test: [ "CMD-SHELL", "wget -qO- http://127.0.0.1:8080/healthz >/dev/null 2>&1 || exit 1" ]
+      test: [ "CMD-SHELL", "nginx -t || exit 1" ]
       interval: 10s
       timeout: 3s
       retries: 10
